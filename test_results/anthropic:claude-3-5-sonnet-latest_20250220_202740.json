@@ -1,0 +1,38 @@
+[
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Let me solve 2+2 step by step:\n\n1. Start with the basic addition problem:\n   * 2 + 2\n\n2. Add the numbers:\n   * 2 + 2 = 4\n\nTherefore, 2 + 2 = 4\n\nThis is a simple addition problem where we combine two equal numbers. The result is 4, which we can verify by:\n* Counting on our fingers\n* Using a number line\n* Using objects to count",
+    "error": null,
+    "duration": 4.082933,
+    "timestamp": "2025-02-20 20:27:22.950777"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree (BST)\n\n## Definition\nA Binary Search Tree is a hierarchical data structure composed of nodes, where each node contains a value and has up to two children (left and right). The tree follows specific ordering rules that make searching efficient.\n\n## Key Properties\n* Each node has at most two children\n* Left child contains a value less than the parent\n* Right child contains a value greater than the parent\n* All nodes in the left subtree are less than the parent\n* All nodes in the right subtree are greater than the parent\n\n## Basic Structure\n```python\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n```\n\n## Operations\n\n### 1. Insertion\n* Compare the new value with the root\n* If less, go to left subtree\n* If greater, go to right subtree\n* Repeat until finding an empty spot\n\n```python\ndef insert(root, value):\n    if root is None:\n        return Node(value)\n    \n    if value < root.value:\n        root.left = insert(root.left, value)\n    else:\n        root.right = insert(root.right, value)\n    \n    return root\n```\n\n### 2. Search\n* Start at the root\n* If target value is found, return True\n* If less than current node, go left\n* If greater than current node, go right\n* If we reach None, value not found\n\n```python\ndef search(root, target):\n    if root is None:\n        return False\n    \n    if root.value == target:\n        return True\n    \n    if target < root.value:\n        return search(root.left, target)\n    return search(root.right, target)\n```\n\n## Time Complexity\n* Average case: O(log n) for search, insert, and delete\n* Worst case: O(n) if tree becomes unbalanced\n* Best case: O(log n) when tree is perfectly balanced\n\n## Common Applications\n* Implementing dictionaries\n* Sorting algorithms\n* File system organization\n* Database indexing\n* Priority queues",
+    "error": null,
+    "duration": 6.794788,
+    "timestamp": "2025-02-20 20:27:30.246852"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "Here's a simple function that adds two numbers together:\n\n```python\ndef add_numbers(a: float, b: float) -> float:\n    \"\"\"\n    Add two numbers together and return their sum.\n    \n    Args:\n        a (float): First number\n        b (float): Second number\n        \n    Returns:\n        float: Sum of the two numbers\n        \n    Examples:\n        >>> add_numbers(5, 3)\n        8.0\n        >>> add_numbers(-1, 1)\n        0.0\n    \"\"\"\n    return float(a + b)\n```\n\nThis function:\n- Takes two parameters `a` and `b` that can be integers or floating point numbers\n- Uses type hints to indicate the expected types and return type\n- Includes a docstring with description, args, returns, and example usage\n- Converts the result to float to ensure consistent return type\n- Returns the sum of the two numbers\n\nYou can use it like this:\n\n```python\nresult = add_numbers(5, 3)\nprint(result)  # Output: 8.0\n\n# Also works with negative numbers and floats\nresult = add_numbers(-1.5, 2.7)\nprint(result)  # Output: 1.2\n```",
+    "error": null,
+    "duration": 6.046929,
+    "timestamp": "2025-02-20 20:27:36.795084"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "# Finding the Speed of a Train\n\n## Given Information\n* Distance traveled = 120 kilometers\n* Time taken = 2 hours\n\n## Formula\n* Speed = Distance \u00f7 Time\n\n## Solution\n* Plug the values into the formula:\n  * Speed = 120 kilometers \u00f7 2 hours\n  * Speed = 60 kilometers per hour\n\n## Answer\n* The train's speed is 60 kilometers per hour (km/h)\n\n## Unit Check\n* The units work out correctly:\n  * kilometers \u00f7 hours = kilometers per hour (km/h)",
+    "error": null,
+    "duration": 2.811602,
+    "timestamp": "2025-02-20 20:27:40.108062"
+  }
+]

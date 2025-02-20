@@ -1,0 +1,56 @@
+{
+  "anthropic:claude-3-5-sonnet-latest": {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "provider": "anthropic",
+    "base_name": "claude-3-5-sonnet",
+    "capabilities": {
+      "tools": true,
+      "function_calling": true,
+      "json_mode": true,
+      "system_prompt": true,
+      "vision": true,
+      "audio": false
+    },
+    "last_success": "2025-02-20 20:27:40.108062",
+    "last_failure": null,
+    "failure_count": 0,
+    "success_count": 8,
+    "known_issues": []
+  },
+  "groq:deepseek-r1-distill-llama-70b-specdec": {
+    "model": "groq:deepseek-r1-distill-llama-70b-specdec",
+    "provider": "groq",
+    "base_name": "deepseek-r1-distill-llama-70b",
+    "capabilities": {
+      "tools": false,
+      "function_calling": false,
+      "json_mode": true,
+      "system_prompt": true,
+      "vision": false,
+      "audio": false
+    },
+    "last_success": "2025-02-20 20:27:24.359578",
+    "last_failure": null,
+    "failure_count": 0,
+    "success_count": 8,
+    "known_issues": []
+  },
+  "groq:qwen-2.5-coder-32b": {
+    "model": "groq:qwen-2.5-coder-32b",
+    "provider": "groq",
+    "base_name": "qwen-2.5-coder",
+    "capabilities": {
+      "tools": false,
+      "function_calling": false,
+      "json_mode": true,
+      "system_prompt": true,
+      "vision": false,
+      "audio": false
+    },
+    "last_success": "2025-02-20 20:27:26.145189",
+    "last_failure": null,
+    "failure_count": 0,
+    "success_count": 8,
+    "known_issues": []
+  }
+}
