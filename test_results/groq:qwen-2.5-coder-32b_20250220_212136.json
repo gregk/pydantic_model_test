@@ -1,0 +1,38 @@
+[
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Sure! Here's the calculation of 2 + 2 shown in markdown format:\n\n```\n2 + 2 = 4\n```\n\nThis is a simple addition:\n\n```\n  2\n+ 2\n-----\n  4\n```",
+    "error": null,
+    "duration": 0.889804,
+    "timestamp": "2025-02-20 21:21:19.940078+00:00"
+  },
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree\n\nA **binary search tree (BST)** is a data structure that facilitates fast lookup, addition, and removal of items. It maintains a sorted structure which allows for these operations to be performed in logarithmic time, O(log n), on average. Here are the key properties of a binary search tree:\n\n- Each node has at most two children: a left child and a right child.\n- The left subtree of a node contains only nodes with values less than the node's value.\n- The right subtree of a node contains only nodes with values greater than the node's value.\n- The left and right subtree each must also be a binary search tree.\n\n## Example\n\nHere is a simple example of a binary search tree:\n\n```\n      7\n     / \\\n    3   8\n   / \\   \\\n  1   4   10\n   \\     /\n    2   9\n```\n\n## Basic Operations\n\n### Insertion\n\nTo insert a value into a BST:\n\n- Start at the root.\n- Compare the value to be inserted with each node, moving to the left child if it's smaller or the right child if it's larger.\n- Insert the value as a child of the last node visited.\n\n#### Code Example\n\n```python\nclass TreeNode:\n    def __init__(self, key):\n        self.left = None\n        self.right = None\n        self.val = key\n\ndef insert(root, key):\n    if root is None:\n        return TreeNode(key)\n    else:\n        if root.val < key:\n            root.right = insert(root.right, key)\n        else:\n            root.left = insert(root.left, key)\n    return root\n```\n\n### Search\n\nTo search for a value in a BST:\n\n- Start at the root.\n- Compare the value to be searched with each node, moving to the left child if it's smaller or the right child if it's larger.\n- Continue until the value is found or a leaf node is reached.\n\n#### Code Example\n\n```python\ndef search(root, key):\n    if root is None or root.val == key:\n        return root\n    if root.val < key:\n        return search(root.right, key)\n    return search(root.left, key)\n```\n\n### Deletion\n\nTo delete a value from a BST:\n\n- Find the node to be deleted.\n- If the node has no children, delete it.\n- If the node has one child, replace it with its child.\n- If the node has two children, replace it with its in-order successor (smallest node in the right subtree), then delete the successor.\n\n#### Code Example\n\n```python\ndef get_min_value_node(node):\n    current = node\n    while current.left is not None:\n        current = current.left\n    return current\n\ndef delete(root, key):\n    if root is None:\n        return root\n    if key < root.val:\n        root.left = delete(root.left, key)\n    elif key > root.val:\n        root.right = delete(root.right, key)\n    else:\n        if root.left is None:\n            return root.right\n        elif root.right is None:\n            return root.left\n        temp = get_min_value_node(root.right)\n        root.val = temp.val\n        root.right = delete(root.right, temp.val)\n    return root\n```\n\n## Time Complexity\n\n- **Search, Insertion, Deletion:** Average case: O(log n). Worst case: O(n) (when the tree degenerates into a linked list).\n\nBinary search trees are widely used in computer science due to their efficiency in many operations and their simple structure. However, they are not self-balancing by default, which can lead to degenerate performance in certain scenarios. Variants like AVL trees and Red-Black trees address this issue by maintaining balance.",
+    "error": null,
+    "duration": 2.3519,
+    "timestamp": "2025-02-20 21:21:22.793178+00:00"
+  },
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "Certainly! Below is a Python function that adds two numbers, formatted in markdown with an explanation and a code block.\n\n```markdown\n## Function to Add Two Numbers\n\nThis function, `add_numbers`, takes two arguments, `a` and `b`, and returns their sum. It's a simple demonstration of how to perform addition in Python.\n\n### Code\n\n```python\ndef add_numbers(a, b):\n    \"\"\"\n    Adds two numbers together.\n\n    Parameters:\n    a (int, float): The first number.\n    b (int, float): The second number.\n\n    Returns:\n    int, float: The sum of the two numbers.\n    \"\"\"\n    return a + b\n\n# Example usage:\nresult = add_numbers(5, 3)\nprint(\"The sum is:\", result)  # Output: The sum is: 8\n```\n\n### Explanation\n\n- **Function Definition**: The function `add_numbers` is defined with two parameters, `a` and `b`.\n- **Docstring**: A docstring is provided to describe the function, its parameters, and its return value.\n- **Addition Operation**: Inside the function, the `+` operator is used to add `a` and `b`.\n- **Return Statement**: The result of the addition is returned from the function.\n- **Example Usage**: An example is given to demonstrate how to use the function and print the result.\n```\n\nYou can copy the code block into a Python environment to see it in action.",
+    "error": null,
+    "duration": 1.224694,
+    "timestamp": "2025-02-20 21:21:24.519134+00:00"
+  },
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "To calculate the speed of the train, you can use the formula:\n\n\\[ \\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} \\]\n\nGiven:\n- Distance = 120 kilometers\n- Time = 2 hours\n\nLet's plug the given values into the formula:\n\n\\[ \\text{Speed} = \\frac{120 \\, \\text{km}}{2 \\, \\text{hours}} \\]\n\nNow, perform the division:\n\n\\[ \\text{Speed} = 60 \\, \\text{km/h} \\]\n\nSo, the speed of the train is 60 kilometers per hour.\n\n```markdown\nTo calculate the speed of the train, you can use the formula:\n\n\\[ \\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} \\]\n\nGiven:\n- Distance = 120 kilometers\n- Time = 2 hours\n\nLet's plug the given values into the formula:\n\n\\[ \\text{Speed} = \\frac{120 \\, \\text{km}}{2 \\, \\text{hours}} \\]\n\nNow, perform the division:\n\n\\[ \\text{Speed} = 60 \\, \\text{km/h} \\]\n\nSo, the speed of the train is **60 kilometers per hour**.\n```",
+    "error": null,
+    "duration": 1.113723,
+    "timestamp": "2025-02-20 21:21:26.134913+00:00"
+  }
+]

@@ -31,6 +31,7 @@ from model_utils import (
     get_latest_model,
     get_model_info
 )
+from model_agents import create_test_agent, run_test
 
 # Load environment variables from .env file
 load_dotenv()
@@ -128,6 +129,33 @@ STANDARD_TESTS = [
         result_type=str,
         validation_rules={"pattern": r"#.*\n.*\*"},
         required_capabilities=["system_prompt"]
+    ),
+    TestCase(
+        name="complex_code",
+        prompt="Implement a Red-Black Tree insertion algorithm in Python. Include type hints and docstrings. Format your response in markdown.",
+        expected_type="markdown",
+        system_prompt="You are an algorithms expert. Provide detailed, production-quality code with explanations.",
+        result_type=str,
+        validation_rules={"pattern": r"#.*\n.*```python.*class.*def"},
+        required_capabilities=["system_prompt"]
+    ),
+    TestCase(
+        name="system_design",
+        prompt="Design a distributed rate limiter system. Consider scalability, fault tolerance, and consistency. Format your response in markdown with diagrams in ASCII art.",
+        expected_type="markdown",
+        system_prompt="You are a senior system architect. Provide comprehensive system designs with clear explanations.",
+        result_type=str,
+        validation_rules={"pattern": r"#.*\n.*\*.*\n.*```"},
+        required_capabilities=["system_prompt"]
+    ),
+    TestCase(
+        name="problem_solving",
+        prompt="Given a stream of integers, design a data structure that can efficiently find the median at any point. Explain your approach and implement it in Python. Format in markdown.",
+        expected_type="markdown",
+        system_prompt="You are a coding interview expert. Explain your thought process and provide optimal solutions.",
+        result_type=str,
+        validation_rules={"pattern": r"#.*\n.*\*.*\n.*```python"},
+        required_capabilities=["system_prompt"]
     )
 ]
 
@@ -192,7 +220,8 @@ class ModelTester:
             self.test_cases = MULTI_FILE_TESTS
         
         # Available providers based on environment
-        self.available_providers = set()
+        self.available_providers: Set[str] = set()
+        self.agents: Dict[str, Agent] = {}
         self.provider_keys = {}  # Track which providers have valid keys
         self.missing_providers = set()  # Track which providers are missing keys
         
@@ -293,113 +322,112 @@ class ModelTester:
         capabilities = model_info["capabilities"]
         return all(capabilities.get(cap, False) for cap in test_case.required_capabilities)
 
-    async def run_test(self, model: str, test_case: TestCase) -> TestResult:
-        """Run a single test case against a model."""
-        start_time = datetime.now(UTC)
+    async def _run_test_case(self, model: str, test_case: TestCase) -> TestResult:
+        """Run a single test case for a model."""
         try:
-            # Get model info
-            model_info = get_model_info(model)
-            
-            # Check if model can run this test
-            if not self._can_run_test(model_info, test_case):
-                print(f"  ⚠️  Skipping {test_case.name} - Model lacks capabilities: {test_case.required_capabilities}")
-                return TestResult(
-                    model=model,
-                    test_case=test_case.name,
-                    success=False,
-                    error=f"Model lacks required capabilities: {test_case.required_capabilities}",
-                    duration=0
-                )
-            
-            print(f"  🔄 Running {test_case.name}...")
-            
-            # Create agent with model
-            agent = Agent(
-                model,
-                result_type=test_case.result_type,
-                system_prompt=test_case.system_prompt
+            agent = self.agents[model]
+            result = await run_test(
+                agent=agent,
+                system_prompt=test_case.system_prompt,
+                user_prompt=test_case.prompt
             )
-            
-            # Run test asynchronously
-            response = await agent.run(test_case.prompt)
-            
-            duration = (datetime.now(UTC) - start_time).total_seconds()
-            
-            # Print success with timing
-            print(f"  ✓ {test_case.name} completed in {duration:.1f}s")
-            print(f"    Response: {str(response.data)[:100]}..." if len(str(response.data)) > 100 else f"    Response: {response.data}")
             
             return TestResult(
                 model=model,
                 test_case=test_case.name,
                 success=True,
-                response=str(response.data),
-                duration=duration
+                response=result.content,
+                duration=result.duration,
+                timestamp=datetime.now(UTC)
             )
             
         except Exception as e:
-            duration = (datetime.now(UTC) - start_time).total_seconds()
             error_msg = str(e)
-            
-            # Print failure with timing
-            print(f"  ✗ {test_case.name} failed in {duration:.1f}s")
-            print(f"    Error: {error_msg}")
             
             return TestResult(
                 model=model,
                 test_case=test_case.name,
                 success=False,
                 error=error_msg,
-                duration=duration
+                duration=0
             )
 
-    async def test_model(self, model: KnownModelName) -> List[TestResult]:
-        """Run all test cases for a model."""
-        results = []
-        
-        # Get model info
-        model_info = get_model_info(model)
-        
-        # Initialize or update model history with capabilities
-        if model not in self.test_history:
-            self.test_history[model] = ModelTestHistory(
+    async def test_model(self, model: str) -> List[TestResult]:
+        """Run all test cases for a specific model."""
+        try:
+            model_info = get_model_info(model)
+            
+            # Create agent if needed
+            if model not in self.agents:
+                try:
+                    self.agents[model] = create_test_agent(
+                        model_name=model,
+                        api_key=os.getenv(f"{model_info['provider'].upper()}_API_KEY")
+                    )
+                except Exception as e:
+                    print(f"\nError creating agent for {model}: {str(e)}")
+                    return [TestResult(
+                        model=model,
+                        test_case="agent_creation",
+                        success=False,
+                        error=f"Failed to create agent: {str(e)}",
+                        duration=0,
+                        timestamp=datetime.now(UTC)
+                    )]
+
+            agent = self.agents[model]
+            
+            results = []
+            
+            # Initialize or update model history with capabilities
+            if model not in self.test_history:
+                self.test_history[model] = ModelTestHistory(
+                    model=model,
+                    provider=model_info["provider"],
+                    base_name=model_info["base_name"],
+                    capabilities=ModelCapabilities(**model_info["capabilities"])
+                )
+            
+            print(f"\nTesting {model}:")
+            print("Provider:", model_info["provider"])
+            print("Base Name:", model_info["base_name"])
+            print("\nRunning tests:")
+            
+            # Run tests with rate limiting
+            for test_case in self.test_cases:
+                await asyncio.sleep(0.5)  # 500ms delay between tests
+                result = await self._run_test_case(model, test_case)
+                results.append(result)
+                
+                # Update history
+                history = self.test_history[model]
+                if result.success:
+                    history.last_success = result.timestamp
+                    history.success_count += 1
+                else:
+                    history.last_failure = result.timestamp
+                    history.failure_count += 1
+                    if result.error:
+                        history.known_issues.append(result.error)
+            
+            # Print test summary for this model
+            success_count = sum(1 for r in results if r.success)
+            print(f"\nModel Summary:")
+            print(f"Tests passed: {success_count}/{len(results)}")
+            print(f"Success rate: {(success_count/len(results))*100:.1f}%")
+            
+            return results
+            
+        except Exception as e:
+            print(f"\nUnexpected error testing {model}: {str(e)}")
+            return [TestResult(
                 model=model,
-                provider=model_info["provider"],
-                base_name=model_info["base_name"],
-                capabilities=ModelCapabilities(**model_info["capabilities"])
-            )
-        
-        print(f"\nTesting {model}:")
-        print("Provider:", model_info["provider"])
-        print("Base Name:", model_info["base_name"])
-        print("\nRunning tests:")
-        
-        # Run tests with rate limiting
-        for test_case in self.test_cases:
-            # Add small delay between tests to avoid rate limits
-            await asyncio.sleep(0.5)  # 500ms delay between tests
-            
-            result = await self.run_test(model, test_case)
-            results.append(result)
-            
-            # Update history
-            history = self.test_history[model]
-            if result.success:
-                history.last_success = result.timestamp
-                history.success_count += 1
-            else:
-                history.last_failure = result.timestamp
-                history.failure_count += 1
-                if result.error:
-                    history.known_issues.append(result.error)
-        
-        # Print test summary for this model
-        success_count = sum(1 for r in results if r.success)
-        print(f"\nModel Summary:")
-        print(f"Tests passed: {success_count}/{len(results)}")
-        print(f"Success rate: {(success_count/len(results))*100:.1f}%")
-        
-        return results
+                test_case="unexpected_error",
+                success=False,
+                error=str(e),
+                duration=0,
+                timestamp=datetime.now(UTC)
+            )]
 
     def _clean_model_name(self, model: str) -> str:
         """Clean model name for file naming.
@@ -613,25 +641,29 @@ class ModelTester:
         return "\n".join([header_row, separator] + rows)
 
     def _generate_speed_ranking(self, all_results: Dict[str, List[TestResult]]) -> str:
-        """Generate a speed ranking summary for all models.
+        """Generate a speed ranking summary for all models."""
+        if not all_results:
+            return "No test results available"
         
-        Args:
-            all_results: Dictionary mapping model names to their test results
-            
-        Returns:
-            Markdown formatted speed ranking table
-        """
         # Calculate speed metrics for each model
         speed_metrics = []
         for model, results in all_results.items():
+            # Skip if all durations are 0
+            durations = [r.duration for r in results]
+            if not any(durations):  # if all durations are 0
+                continue
+            
             metrics = {
                 "model": model,
-                "avg_duration": sum(r.duration for r in results) / len(results),
-                "min_duration": min(r.duration for r in results),
-                "max_duration": max(r.duration for r in results),
-                "total_duration": sum(r.duration for r in results)
+                "avg_duration": sum(durations) / len(durations),
+                "min_duration": min(durations),
+                "max_duration": max(durations),
+                "total_duration": sum(durations)
             }
             speed_metrics.append(metrics)
+        
+        if not speed_metrics:
+            return "No valid timing data available"
         
         # Sort by average duration (faster first)
         speed_metrics.sort(key=lambda x: x["avg_duration"])
