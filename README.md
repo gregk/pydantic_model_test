@@ -2,6 +2,15 @@
 
 A framework for testing and comparing different LLM models across providers. Tests models for capabilities, speed, and quality of responses.
 
+## Testing for capabilities
+Model Capabilities:
+| Model | Tools | Function Calling | Json Mode | System Prompt | Vision | Audio |
+|---|---|---|---|---|---|---|
+| anthropic:claude-3-5-sonnet-latest | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ |
+| groq:deepseek-r1-distill-llama-70b-specdec | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ |
+| groq:qwen-2.5-coder-32b | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ |
+
+
 ## Latest Test Results
 
 From [model_test_summary_20250220_202740.md](test_results/markdown/model_test_summary_20250220_202740.md):

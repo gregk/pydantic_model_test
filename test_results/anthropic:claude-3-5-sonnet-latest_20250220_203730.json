@@ -1,0 +1,38 @@
+[
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Let me help you solve 2+2 step by step.\n\n### Solution\n1. Start with the numbers 2 and 2\n2. Addition means combining the quantities\n\n```\n2 + 2 = 4\n```\n\n### Explanation\n* When we add two numbers, we combine their values\n* In this case, we combine two groups of 2\n* This gives us a total of 4\n\nTherefore, 2 + 2 = 4",
+    "error": null,
+    "duration": 2.381366,
+    "timestamp": "2025-02-20 20:37:14.362426"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree (BST)\n\n## Definition\nA Binary Search Tree is a hierarchical data structure composed of nodes, where each node contains a value and has up to two children (left and right). The tree follows specific ordering rules that make searching efficient.\n\n## Key Properties\n* Each node has at most two children\n* Left child contains a value less than the parent node\n* Right child contains a value greater than the parent node\n* All nodes in the left subtree are less than the parent\n* All nodes in the right subtree are greater than the parent\n\n## Basic Operations\n### 1. Insertion\n* Compare value with root node\n* If less, go to left subtree\n* If greater, go to right subtree\n* Repeat until finding empty spot\n\n```python\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\ndef insert(root, value):\n    if root is None:\n        return Node(value)\n    \n    if value < root.value:\n        root.left = insert(root.left, value)\n    else:\n        root.right = insert(root.right, value)\n    \n    return root\n```\n\n### 2. Search\n* Start at root\n* If target value equals current node, return True\n* If less, search left subtree\n* If greater, search right subtree\n* If leaf reached without finding value, return False\n\n```python\ndef search(root, target):\n    if root is None:\n        return False\n    \n    if root.value == target:\n        return True\n    \n    if target < root.value:\n        return search(root.left, target)\n    return search(root.right, target)\n```\n\n## Time Complexity\n* Average case: O(log n) for search, insert, delete\n* Worst case: O(n) if tree becomes unbalanced\n\n## Common Applications\n* Dictionary implementations\n* Database indexing\n* File system organization\n* Symbol tables in compilers\n\n## Advantages\n* Efficient searching\n* Maintains sorted elements\n* Dynamic size\n* Easy to implement\n\n## Disadvantages\n* Can become unbalanced\n* No constant-time operations\n* Not suitable for frequent insertions/deletions in middle\n\nRemember that for optimal performance, the tree should remain balanced. This is why self-balancing variants like AVL trees and Red-Black trees were developed.",
+    "error": null,
+    "duration": 8.579771,
+    "timestamp": "2025-02-20 20:37:23.443711"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "Here's a simple function that adds two numbers together:\n\n```python\ndef add_numbers(a: float, b: float) -> float:\n    \"\"\"\n    Add two numbers together and return the sum.\n    \n    Args:\n        a (float): The first number\n        b (float): The second number\n        \n    Returns:\n        float: The sum of the two numbers\n        \n    Example:\n        >>> add_numbers(5, 3)\n        8.0\n        >>> add_numbers(-1, 1)\n        0.0\n    \"\"\"\n    return float(a + b)\n```\n\nThis function:\n- Takes two parameters `a` and `b` which can be integers or floating point numbers\n- Uses type hints to indicate the expected types of inputs and output\n- Converts the result to float to ensure consistent return type\n- Includes a docstring with description, arguments, return value, and examples\n- Returns the sum of the two numbers\n\nYou can use it like this:\n\n```python\nresult = add_numbers(5, 3)\nprint(result)  # Output: 8.0\n\nresult = add_numbers(2.5, 3.7)\nprint(result)  # Output: 6.2\n```",
+    "error": null,
+    "duration": 3.846955,
+    "timestamp": "2025-02-20 20:37:27.792139"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "# Finding the Speed of a Train\n\n## Given Information\n* Distance traveled = 120 kilometers\n* Time taken = 2 hours\n\n## Formula\n* Speed = Distance \u00f7 Time\n\n## Solution\n* Speed = 120 kilometers \u00f7 2 hours\n* Speed = 60 kilometers per hour\n\n## Answer\n* The train's speed is 60 kilometers per hour (km/h)\n\n## Verification\n* We can check this by multiplying the speed by time:\n  * 60 km/h \u00d7 2 h = 120 km\n  * This matches our original distance, confirming our answer",
+    "error": null,
+    "duration": 2.394642,
+    "timestamp": "2025-02-20 20:37:30.688259"
+  }
+]

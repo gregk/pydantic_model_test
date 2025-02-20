@@ -1,0 +1,38 @@
+[
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Let me help you solve 2+2 step by step.\n\n**Problem: 2 + 2**\n\n**Step 1:** Line up the numbers\n```\n2\n+ 2\n```\n\n**Step 2:** Add the numbers\n* 2 plus 2 equals 4\n\n**Therefore:** 2 + 2 = 4\n\nThis is a basic addition problem where we combine two equal numbers to get their sum. The answer is 4.",
+    "error": null,
+    "duration": 2.7243,
+    "timestamp": "2025-02-20 20:40:24.904999+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree (BST)\n\n## Definition\nA Binary Search Tree is a hierarchical data structure composed of nodes, where each node contains a value and has up to two children (left and right). The tree follows specific ordering rules that make searching efficient.\n\n## Key Properties\n* Each node has at most two children\n* Left child contains a value less than the parent\n* Right child contains a value greater than the parent\n* All nodes in the left subtree are less than the parent\n* All nodes in the right subtree are greater than the parent\n\n## Basic Structure\n```python\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n```\n\n## Common Operations\n\n### 1. Insertion\n* Compare the new value with the root\n* If smaller, go to left subtree\n* If larger, go to right subtree\n* Repeat until finding an empty spot\n\n```python\ndef insert(root, value):\n    if root is None:\n        return Node(value)\n    \n    if value < root.value:\n        root.left = insert(root.left, value)\n    else:\n        root.right = insert(root.right, value)\n    \n    return root\n```\n\n### 2. Search\n* Start at the root\n* If target is less than current node, go left\n* If target is greater than current node, go right\n* Continue until found or reach null\n\n```python\ndef search(root, target):\n    if root is None or root.value == target:\n        return root\n    \n    if target < root.value:\n        return search(root.left, target)\n    return search(root.right, target)\n```\n\n## Time Complexity\n* Average case: O(log n) for search, insert, and delete\n* Worst case: O(n) if tree becomes unbalanced\n* Best case: O(log n) when tree is balanced\n\n## Use Cases\n* Implementing dictionaries\n* Database indexing\n* File system organization\n* Symbol tables in compilers\n\n## Advantages\n* Efficient searching\n* Maintains sorted data\n* Flexible for dynamic data\n* Supports range queries\n\n## Disadvantages\n* Can become unbalanced\n* No constant-time operations\n* Requires additional memory for pointers\n\nRemember that Binary Search Trees are the foundation for more advanced tree structures like AVL trees and Red-Black trees, which maintain balance automatically.",
+    "error": null,
+    "duration": 7.56427,
+    "timestamp": "2025-02-20 20:40:32.969621+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "Here's a simple function that adds two numbers together. I'll include type hints to specify the expected number types and a docstring explaining the function's purpose.\n\n```python\ndef add_numbers(a: float, b: float) -> float:\n    \"\"\"\n    Add two numbers together and return their sum.\n    \n    Args:\n        a (float): First number to add\n        b (float): Second number to add\n        \n    Returns:\n        float: Sum of the two input numbers\n        \n    Example:\n        >>> add_numbers(5, 3)\n        8.0\n        >>> add_numbers(2.5, 4.7)\n        7.2\n    \"\"\"\n    return a + b\n```\n\nThis function:\n- Takes two parameters `a` and `b` of type `float` \n- Uses type hints to indicate expected input/output types\n- Includes a detailed docstring with description, args, return value, and examples\n- Returns their sum as a float\n\nYou can use this function with both integers and floating point numbers since Python will automatically convert integers to floats when needed.\n\nExample usage:\n```python\nresult1 = add_numbers(5, 3)     # returns 8.0\nresult2 = add_numbers(2.5, 4.7) # returns 7.2\n```",
+    "error": null,
+    "duration": 5.022033,
+    "timestamp": "2025-02-20 20:40:38.493179+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "# Finding the Speed of a Train\n\n## Given Information\n* Distance traveled = 120 kilometers\n* Time taken = 2 hours\n\n## Formula\n* Speed = Distance \u00f7 Time\n* Units will be in kilometers per hour (km/h)\n\n## Solution\n1. **Plug numbers into formula**\n   * Speed = 120 km \u00f7 2 h\n\n2. **Perform the division**\n   * Speed = 60 km/h\n\n## Final Answer\n* The train's speed is 60 kilometers per hour (60 km/h)\n\n## Check\n* Does this make sense? Yes, because:\n  * If the train maintains 60 km/h for 2 hours\n  * It would cover 60 \u00d7 2 = 120 kilometers\n  * This matches our given information",
+    "error": null,
+    "duration": 2.967152,
+    "timestamp": "2025-02-20 20:40:41.961715+00:00"
+  }
+]

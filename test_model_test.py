@@ -10,9 +10,13 @@ import pytest
 from pathlib import Path
 from datetime import datetime, UTC
 
-from model_test import ModelTester, TestScenario, get_parser
+from model_test import ModelTester, TestScenario, get_parser, TestResult
 
-# Ensure we have test directories
+# Add pytest configuration
+pytest.register_assert_rewrite('test_model_test')
+
+# Remove the global pytestmark and only mark async tests
+
 @pytest.fixture(autouse=True)
 def setup_test_dirs():
     """Create test directories if they don't exist."""
@@ -108,10 +112,8 @@ def test_mutually_exclusive_options(parser):
 @pytest.mark.asyncio
 async def test_model_tester_run_all_tests(model_tester):
     """Test ModelTester.run_all_tests method."""
-    # Only run if we have API keys
     if not os.getenv('ANTHROPIC_API_KEY') and not os.getenv('GROQ_API_KEY'):
         pytest.skip("No API keys available for testing")
-    
     await model_tester.run_all_tests()
     
     # Check that results were saved
@@ -145,15 +147,19 @@ def test_model_tester_save_test_summary(model_tester):
     """Test saving test summary to markdown."""
     timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     
-    # Create some dummy results
+    # Create a proper TestResult object instead of a dict
+    test_result = TestResult(
+        model="test:model",
+        test_case="test_case",
+        success=True,
+        response="Test response",  # Add a response to check length
+        duration=1.0,
+        timestamp=datetime.now(UTC)
+    )
+    
+    # Create results dictionary with list of TestResult objects
     results = {
-        "test:model": [{
-            "model": "test:model",
-            "test_case": "test_case",
-            "success": True,
-            "duration": 1.0,
-            "timestamp": datetime.now(UTC)
-        }]
+        "test:model": [test_result]
     }
     
     filepath = model_tester.save_test_summary(results, timestamp)
@@ -161,6 +167,8 @@ def test_model_tester_save_test_summary(model_tester):
     content = Path(filepath).read_text()
     assert "# Model Test Results Summary" in content
     assert "Test run:" in content
+    assert "test:model" in content  # Check that our test model is in the output
+    assert "test_case" in content   # Check that our test case is in the output
 
 if __name__ == '__main__':
     pytest.main(['-v', __file__]) 

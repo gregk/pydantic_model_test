@@ -77,7 +77,7 @@ class TestResult(BaseModel):
     response: Optional[str] = None
     error: Optional[str] = None
     duration: float
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 class ModelTestHistory(BaseModel):
     """Historical test results for a model."""
@@ -707,6 +707,47 @@ class ModelTester:
         
         return str(filepath)
 
+    def save_capabilities_summary(self, models_info: List[Tuple[str, Dict[str, Any]]], timestamp: str) -> str:
+        """Save model capabilities summary to a markdown file.
+        
+        Args:
+            models_info: List of tuples containing model name and info
+            timestamp: Timestamp for the filename
+            
+        Returns:
+            Path to the created markdown file
+        """
+        # Create markdown directory if it doesn't exist
+        markdown_dir = Path("test_results/markdown")
+        markdown_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Create filename
+        filename = f"model_capabilities_{timestamp}.md"
+        filepath = markdown_dir / filename
+        
+        with open(filepath, "w") as f:
+            f.write("# Model Capabilities Summary\n\n")
+            f.write(f"Generated: {datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S UTC')}\n\n")
+            
+            # Write capabilities table
+            f.write("| Model | Tools | Function Calling | Json Mode | System Prompt | Vision | Audio |\n")
+            f.write("|---|---|---|---|---|---|---|\n")
+            
+            for model, info in models_info:
+                caps = info["capabilities"]
+                row = [
+                    model,
+                    "✓" if caps["tools"] else "✗",
+                    "✓" if caps["function_calling"] else "✗",
+                    "✓" if caps["json_mode"] else "✗",
+                    "✓" if caps["system_prompt"] else "✗",
+                    "✓" if caps["vision"] else "✗",
+                    "✓" if caps["audio"] else "✗"
+                ]
+                f.write(f"| {' | '.join(row)} |\n")
+        
+        return str(filepath)
+
     async def run_all_tests(self, failed_only: bool = False):
         """Run tests for all available models concurrently while tracking individual progress."""
         # Check provider availability first
@@ -776,6 +817,10 @@ class ModelTester:
         # Save results to markdown file
         summary_file = self.save_test_summary(all_results, timestamp)
         print(f"\nTest summary saved to: {summary_file}")
+
+        # Save capabilities summary
+        capabilities_file = self.save_capabilities_summary(models_info, timestamp)
+        print(f"\nCapabilities summary saved to: {capabilities_file}")
 
 
 def get_parser() -> argparse.ArgumentParser:

@@ -1,0 +1,38 @@
+[
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Certainly! Here's how you can show the calculation of 2 + 2 in markdown format:\n\n```markdown\n# Calculation of 2 + 2\n\nLet's solve the simple addition problem: 2 + 2.\n\nStep 1: Write down the numbers to be added.\n2\n+ 2\n\nStep 2: Add the units place.\n2 (from the first number)\n+ 2 (from the second number)\n------\n  4\n\nTherefore, 2 + 2 equals 4.\n```\n\nWhen rendered, it will look like this:\n\n# Calculation of 2 + 2\n\nLet's solve the simple addition problem: 2 + 2.\n\nStep 1: Write down the numbers to be added.\n2\n+ 2\n\nStep 2: Add the units place.\n2 (from the first number)\n+ 2 (from the second number)\n------\n  4\n\nTherefore, 2 + 2 equals 4.",
+    "error": null,
+    "duration": 1.168291,
+    "timestamp": "2025-02-20 20:37:13.336511"
+  },
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree (BST)\n\nA Binary Search Tree (BST) is a node-based binary tree data structure which has the following properties:\n- The left subtree of a node contains only nodes with keys lesser than the node\u2019s key.\n- The right subtree of a node contains only nodes with keys greater than the node\u2019s key.\n- The left and right subtree each must also be a binary search tree.\n\n## Structure\n\nA BST is typically organized so that the left subtree contains values less than the parent node, and the right subtree contains values greater than the parent node. This ordering is crucial for many of the operations on the bst, such as searching, insertion, and deletion.\n\n## Basic Operations\n\n1. **Search**\n   - To search a given key in a BST, we recursively compare the root of the BST and the key.\n   - If the key is lesser than the root, we go to the left subtree.\n   - If the key is greater than the root, we go to the right subtree.\n   - If the key is equal to the root, we return the root.\n\n2. **Insertion**\n   - To insert a new data item into BST, the algorithm starts at the root.\n   - It then compares the key of the currentNode and the data.\n   - Depending on the comparison, it either recursively traverses the left or right subtree.\n   - When it reaches a leaf node, it inserts the new key.\n\n3. **Deletion**\n   - Deletion of a node is done in three ways:\n     - Node to be deleted is the leaf: Simply remove from the tree.\n     - Node to be deleted has only one child: Copy the child to the node and delete the child.\n     - Node to be deleted has two children: Find the inorder successor (smallest in the right subtree) of the node. Copy contents of the inorder successor to the node and delete the inorder successor. Note that inorder predecessor can also be used.\n\n## Advantages\n- Allow faster lookup, addition, and removal of items.\n- Provide a data structure which is more flexible than arrays and simpler to use than self-balancing trees like AVL trees or Red-Black Trees.\n\n## Disadvantages\n- Worst-case time complexity of the operations can be O(n), where n is the number of nodes in the tree. This happens when the tree becomes unbalanced.\n\n## Example Code\n\nHere's an example of a simple BST operations in Python:\n\n```python\nclass Node:\n    def __init__(self, key):\n        self.left = None\n        self.right = None\n        self.val = key\n\ndef insert(root, key):\n    # If the tree is empty, return a new node\n    if root is None:\n        return Node(key)\n\n    # Otherwise, recur down the tree\n    if key < root.val:\n        root.left = insert(root.left, key)\n    else:\n        root.right = insert(root.right, key)\n\n    # return the (unchanged) node pointer\n    return root\n\ndef inorder_traversal(root):\n    if root:\n        inorder_traversal(root.left)\n        print(root.val)\n        inorder_traversal(root.right)\n\n# Driver program to test the above functions\n# Let's create the following BST\n#       50\n#      /  \\\n#    30   70\n#   / \\   / \\\n#  20 40 60 80\n\nr = Node(50)\nr = insert(r, 30)\nr = insert(r, 20)\nr = insert(r, 40)\nr = insert(r, 70)\nr = insert(r, 60)\nr = insert(r, 80)\n\n# Inorder traversal of the BST\ninorder_traversal(r)\n```\n\nThis code defines a simple Node class and functions to insert nodes and perform an inorder traversal of the binary search tree. It also shows an example of how to create a simple BST and traverse it using the inorder traversal method.",
+    "error": null,
+    "duration": 2.425985,
+    "timestamp": "2025-02-20 20:37:16.263892"
+  },
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "Certainly! Below is a Python function that adds two numbers, formatted in markdown with explanations and type hints. The function includes a docstring to explain its purpose and usage.\n\n```markdown\n# Function: add_two_numbers\n\n## Description\nThe `add_two_numbers` function takes two numbers as input and returns their sum. It is designed to work with both integers and floating-point numbers.\n\n## Parameters\n- `a` (Union[int, float]): The first number to be added. It can be an integer or a float.\n- `b` (Union[int, float]): The second number to be added. It can be an integer or a float.\n\n## Returns\n- Union[int, float]: The sum of the two numbers. The return type will match the type of the inputs (either int or float).\n\n## Example Usage\n```python\nresult = add_two_numbers(3, 5)  # Output will be 8\nresult = add_two_numbers(2.5, 3.5)  # Output will be 6.0\n```\n\n## Code Implementation\n```\n\n```python\nfrom typing import Union\n\ndef add_two_numbers(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:\n    \"\"\"\n    Adds two numbers and returns the sum.\n    \n    Parameters:\n    a (Union[int, float]): The first number to add.\n    b (Union[int, float]): The second number to add.\n    \n    Returns:\n    Union[int, float]: The sum of the two numbers.\n    \"\"\"\n    return a + b\n```\n\nThis function is straightforward and leverages Python's dynamic typing system to handle both integer and floating-point inputs seamlessly. The `Union` type hint from the `typing` module is used to indicate that the parameters and return value can be either an integer or a float.\n```",
+    "error": null,
+    "duration": 1.293083,
+    "timestamp": "2025-02-20 20:37:18.057913"
+  },
+  {
+    "model": "groq:qwen-2.5-coder-32b",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "# Problem Breakdown: Calculating Speed of a Train\n\n## Given Information\n- Distance traveled by the train: 120 kilometers\n- Time taken by the train: 2 hours\n\n## Formula\nSpeed is calculated using the formula:\n\\[ \\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} \\]\n\n## Steps to Solve\n\n### Step 1: Identify the values\n- Distance = 120 kilometers\n- Time = 2 hours\n\n### Step 2: Substitute the values into the formula\n\\[ \\text{Speed} = \\frac{120 \\text{ kilometers}}{2 \\text{ hours}} \\]\n\n### Step 3: Perform the division\n\\[ \\text{Speed} = 60 \\text{ kilometers per hour} \\]\n\n## Conclusion\nThe speed of the train is 60 kilometers per hour.",
+    "error": null,
+    "duration": 0.782481,
+    "timestamp": "2025-02-20 20:37:19.341927"
+  }
+]
