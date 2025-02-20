@@ -36,6 +36,17 @@ From [model_test_summary_20250220_202740.md](test_results/markdown/model_test_su
 | 2 | groq:qwen-2.5-coder-32b | 1.61 | 1.02 | 2.91 | 6.45 | 2.7x faster |
 | 3 | anthropic:claude-3-5-sonnet-latest | 4.42 | 2.64 | 7.67 | 17.67 | 1.0x faster |
 
+# Model Capabilities Summary
+
+Generated: 2025-02-20 21:03:08 UTC
+
+| Model | Tools | Function Calling | Json Mode | System Prompt | Vision | Audio |
+|---|---|---|---|---|---|---|
+| anthropic:claude-3-5-sonnet-latest | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ |
+| groq:deepseek-r1-distill-llama-70b-specdec | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ |
+| groq:qwen-2.5-coder-32b | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ |
+
+
 ## Features
 
 - Test multiple LLM providers and models
