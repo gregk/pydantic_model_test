@@ -11,10 +11,10 @@
       "vision": true,
       "audio": false
     },
-    "last_success": "2025-02-20 20:27:40.108062",
+    "last_success": "2025-02-20 21:27:14.829696+00:00",
     "last_failure": null,
     "failure_count": 0,
-    "success_count": 8,
+    "success_count": 23,
     "known_issues": []
   },
   "groq:deepseek-r1-distill-llama-70b-specdec": {
@@ -29,10 +29,10 @@
       "vision": false,
       "audio": false
     },
-    "last_success": "2025-02-20 20:27:24.359578",
+    "last_success": "2025-02-20 21:27:05.434435+00:00",
     "last_failure": null,
     "failure_count": 0,
-    "success_count": 8,
+    "success_count": 12,
     "known_issues": []
   },
   "groq:qwen-2.5-coder-32b": {
@@ -47,10 +47,10 @@
       "vision": false,
       "audio": false
     },
-    "last_success": "2025-02-20 20:27:26.145189",
+    "last_success": "2025-02-20 21:27:08.360447+00:00",
     "last_failure": null,
     "failure_count": 0,
-    "success_count": 8,
+    "success_count": 12,
     "known_issues": []
   }
 }

@@ -1,0 +1,38 @@
+[
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Let me solve 2+2 step by step:\n\n```\nStep 1: Line up the numbers\n  2\n+ 2\n---\n\nStep 2: Add the numbers\n  2\n+ 2\n---\n  4\n```\n\nTherefore, 2 + 2 = 4",
+    "error": null,
+    "duration": 1.938893,
+    "timestamp": "2025-02-20 21:21:38.492274+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree (BST)\n\n## Definition\nA Binary Search Tree is a hierarchical data structure composed of nodes, where each node contains a value and has up to two children (left and right). The BST follows specific ordering rules that make it efficient for searching, inserting, and deleting elements.\n\n## Key Properties\n* Each node has at most two children\n* Left child contains a value less than its parent\n* Right child contains a value greater than its parent\n* All nodes in the left subtree are less than the parent\n* All nodes in the right subtree are greater than the parent\n* No duplicate values are allowed (in standard BST)\n\n## Basic Structure\n\n```python\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\nclass BinarySearchTree:\n    def __init__(self):\n        self.root = None\n```\n\n## Common Operations\n\n### 1. Insertion\n```python\ndef insert(self, value):\n    if not self.root:\n        self.root = Node(value)\n        return\n    \n    current = self.root\n    while True:\n        if value < current.value:\n            if current.left is None:\n                current.left = Node(value)\n                break\n            current = current.left\n        else:\n            if current.right is None:\n                current.right = Node(value)\n                break\n            current = current.right\n```\n\n### 2. Search\n```python\ndef search(self, value):\n    current = self.root\n    while current:\n        if value == current.value:\n            return True\n        elif value < current.value:\n            current = current.left\n        else:\n            current = current.right\n    return False\n```\n\n## Time Complexity\n* Average Case:\n    * Search: O(log n)\n    * Insert: O(log n)\n    * Delete: O(log n)\n* Worst Case (unbalanced tree):\n    * Search: O(n)\n    * Insert: O(n)\n    * Delete: O(n)\n\n## Advantages\n* Efficient searching compared to linear data structures\n* Maintains sorted order of elements\n* Supports dynamic data sets\n* Allows for range queries\n\n## Disadvantages\n* Can become unbalanced, leading to poor performance\n* No constant-time operations\n* Requires more space than arrays\n* More complex implementation than simple data structures\n\n## Common Applications\n* Implementation of database indexes\n* File system organization\n* Auto-complete features\n* Priority queues\n* Expression evaluation\n\n## Example Usage\n```python\nbst = BinarySearchTree()\nbst.insert(5)\nbst.insert(3)\nbst.insert(7)\nbst.insert(1)\nbst.insert(9)\n\nprint(bst.search(3))  # True\nprint(bst.search(4))  # False\n```\n\nThe resulting tree would look like this:\n```\n     5\n    / \\\n   3   7\n  /     \\\n 1       9\n```",
+    "error": null,
+    "duration": 9.186729,
+    "timestamp": "2025-02-20 21:21:48.180248+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "Here's a Python function that adds two numbers:\n\n### Function Explanation\nThis function takes two parameters and returns their sum. It can work with both integers and floating-point numbers.\n\n```python\ndef add_numbers(num1, num2):\n    \"\"\"\n    Add two numbers together and return the result.\n    \n    Parameters:\n    num1 (int/float): First number\n    num2 (int/float): Second number\n    \n    Returns:\n    int/float: The sum of num1 and num2\n    \"\"\"\n    return num1 + num2\n\n# Example usage\nresult = add_numbers(5, 3)\nprint(result)  # Output: 8\n\n# It also works with floating point numbers\nfloat_result = add_numbers(3.14, 2.86)\nprint(float_result)  # Output: 6.0\n```\n\n### Key Points:\n1. The function takes two parameters: `num1` and `num2`\n2. Uses the `+` operator to perform addition\n3. Returns the sum of the two numbers\n4. Can handle both integers and floating-point numbers\n5. Includes a docstring explaining the function's purpose and parameters",
+    "error": null,
+    "duration": 3.727547,
+    "timestamp": "2025-02-20 21:21:52.409027+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "# Solving for Train Speed\n\n## Formula\n* Speed = Distance \u00f7 Time\n\n## Given Information\n* Distance = 120 kilometers\n* Time = 2 hours\n\n## Solution\n* Speed = 120 km \u00f7 2 h\n* Speed = 60 kilometers per hour (km/h)\n\nTherefore, the train's speed is **60 kilometers per hour**.",
+    "error": null,
+    "duration": 1.620238,
+    "timestamp": "2025-02-20 21:21:54.530463+00:00"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "basic_response",
+    "success": true,
+    "response": "Let me solve 2+2:\n\n```\n2 + 2 = 4\n```\n\nThe solution is **4**.\n\n*Explanation*:\n- We are adding two numbers: 2 and 2\n- When we combine these numbers using addition\n- The result is 4\n\nThis is one of the most basic addition problems in mathematics.",
+    "error": null,
+    "duration": 1.805251,
+    "timestamp": "2025-02-20 21:21:20.818514+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "markdown_structure",
+    "success": true,
+    "response": "# Binary Search Tree (BST)\n\n## Definition\nA Binary Search Tree is a hierarchical data structure composed of nodes, where each node contains a value and has up to two children (left and right). The tree follows specific ordering rules that make searching, insertion, and deletion operations efficient.\n\n## Key Properties\n* Each node has at most two children\n* Left child contains a value less than its parent\n* Right child contains a value greater than its parent\n* All nodes in the left subtree are less than the parent\n* All nodes in the right subtree are greater than the parent\n\n## Basic Structure\n\n```python\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n```\n\n## Common Operations\n\n### 1. Insertion\n```python\ndef insert(root, value):\n    if root is None:\n        return Node(value)\n    \n    if value < root.value:\n        root.left = insert(root.left, value)\n    else:\n        root.right = insert(root.right, value)\n    \n    return root\n```\n\n### 2. Search\n```python\ndef search(root, value):\n    if root is None or root.value == value:\n        return root\n    \n    if value < root.value:\n        return search(root.left, value)\n    return search(root.right, value)\n```\n\n## Advantages\n* Efficient searching (O(log n) average case)\n* Maintains sorted data\n* Efficient insertion and deletion\n* Simple implementation\n\n## Disadvantages\n* Can become unbalanced\n* Worst-case time complexity becomes O(n)\n* No constant-time access to elements\n\n## Time Complexity\nOperation | Average Case | Worst Case\n----------|--------------|------------\nSearch    | O(log n)     | O(n)\nInsert    | O(log n)     | O(n)\nDelete    | O(log n)     | O(n)\n\n## Example Usage\n```python\n# Create a BST\nroot = Node(10)\ninsert(root, 5)\ninsert(root, 15)\ninsert(root, 3)\ninsert(root, 7)\n\n# Search for a value\nresult = search(root, 7)\nif result:\n    print(\"Value found!\")\nelse:\n    print(\"Value not found!\")\n```\n\n## Applications\n* Implementing dictionaries\n* Database indexing\n* File system organization\n* Priority queues\n* Expression evaluation\n\nRemember that for optimal performance, the tree should remain balanced. For guaranteed balanced trees, consider using self-balancing variants like AVL trees or Red-Black trees.",
+    "error": null,
+    "duration": 7.844797,
+    "timestamp": "2025-02-20 21:21:29.164485+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "code_generation",
+    "success": true,
+    "response": "# Adding Two Numbers in Python\n\nHere's a simple function that takes two numbers as parameters and returns their sum.\n\n## Function Explanation\n- The function is named `add_numbers`\n- It takes two parameters: `a` and `b`\n- It returns the sum of these two numbers\n- The function can work with both integers and floating-point numbers\n\n## Code\n```python\ndef add_numbers(a, b):\n    \"\"\"\n    Add two numbers and return the result.\n    \n    Parameters:\n    a (int/float): First number\n    b (int/float): Second number\n    \n    Returns:\n    int/float: Sum of the two numbers\n    \"\"\"\n    return a + b\n\n# Example usage\nprint(add_numbers(5, 3))      # Output: 8\nprint(add_numbers(2.5, 4.7))  # Output: 7.2\n```\n\n## Usage\nYou can call this function with any two numbers:\n- Use integers: `add_numbers(5, 3)`\n- Use floating-point numbers: `add_numbers(2.5, 4.7)`\n- Mix number types: `add_numbers(5, 3.2)`\n\nThe function will return the sum of whatever numbers you provide as arguments.",
+    "error": null,
+    "duration": 3.734584,
+    "timestamp": "2025-02-20 21:21:33.400380+00:00"
+  },
+  {
+    "model": "anthropic:claude-3-5-sonnet-latest",
+    "test_case": "reasoning",
+    "success": true,
+    "response": "# Solving for Train Speed\n\n## Formula\n* Speed = Distance \u00f7 Time\n\n## Given Information\n* Distance = 120 kilometers\n* Time = 2 hours\n\n## Solution\n1. Plug the values into the formula:\n   * Speed = 120 km \u00f7 2 h\n\n2. Perform the division:\n   * Speed = 60 kilometers per hour\n\n## Answer\n**The train's speed is 60 kilometers per hour (km/h)**",
+    "error": null,
+    "duration": 2.138119,
+    "timestamp": "2025-02-20 21:21:36.039823+00:00"
+  }
+]
